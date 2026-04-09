@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">A210674_Nelson_Sana</string>
+
+
+    <string name="user1">You</string>
+    <string name="seen1">Last seen 1 minutes ago</string>
+
+    <string name="user2">Dad</string>
+    <string name="seen2">Last seen 2 minutes ago</string>
+
+    <string name="user3">Mom</string>
+    <string name="seen3">Last seen 1 minutes ago</string>
+
+    <string name="user4">Brother</string>
+    <string name="seen4">Last seen 3 minutes ago</string>
+
+</resources>
