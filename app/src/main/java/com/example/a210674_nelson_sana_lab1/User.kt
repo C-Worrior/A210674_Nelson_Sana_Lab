@@ -11,7 +11,7 @@ data class User(
 
 val users = listOf(
     User(R.drawable.avatar, R.string.user1, R.string.seen2),
-    User(R.drawable.mom, R.string.user2, R.string.seen2),
+    User(R.drawable.dad, R.string.user2, R.string.seen2),
     User(R.drawable.mom, R.string.user3, R.string.seen3),
     User(R.drawable.brother, R.string.user4, R.string.seen4)
 )

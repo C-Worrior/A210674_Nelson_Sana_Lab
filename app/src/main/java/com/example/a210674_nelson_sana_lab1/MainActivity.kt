@@ -3,7 +3,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -36,10 +40,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.IconButton
 import com.example.a210674_nelson_sana_lab1.ui.theme.AppTheme
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,46 +69,108 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Map_Top_Bar(modifier: Modifier = Modifier) {
-        Row(
-            modifier = modifier
+        var groupClicked by remember {mutableStateOf(false)}
+        val color by animateColorAsState(
+            targetValue = if (groupClicked) MaterialTheme.colorScheme.background else Color.Transparent
+        )
+        Column(
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 10.dp, end = 10.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .padding(horizontal = 10.dp)
+                .padding(top = 35.dp)
+                .background(color)
+                .animateContentSize()
         ) {
-            Icon(
-                painter = painterResource(R.drawable.settings_24px),
-                contentDescription = "Setting",
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(modifier.weight(1f))
-            Box(
-                modifier = Modifier
-                    .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp)
+            if (groupClicked) modifier.background(MaterialTheme.colorScheme.background)
+            Row(
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Family",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(end = 40.dp)
-                )
+                if (!groupClicked) {
+                    Icon(
+                        painter = painterResource(R.drawable.settings_24px),
+                        contentDescription = "Setting",
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+                Spacer(modifier.weight(1f))
+                Button(
+                    onClick = { groupClicked = !groupClicked },
+                    modifier = Modifier
+                ) {
+                    Text(
+                        text = "Family"
+                    )
+                    Icon(
+                        imageVector = if(groupClicked) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        contentDescription = null
+                    )
+                }
+                Spacer(modifier.weight(1f))
+                if (!groupClicked) {
+                    Icon(
+                        painter = painterResource(R.drawable.mail_24px),
+                        contentDescription = "Notification",
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(32.dp)
+                    )
+                    Spacer(modifier.width(10.dp))
+                    Icon(
+                        painter = painterResource(R.drawable.chat_24px),
+                        contentDescription = "Chat",
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
             }
+            if (groupClicked) {
+                CircleExpanded(color,modifier)
+            }
+        }
+    }
 
-            Spacer(modifier.weight(1f))
+    @Composable
+    fun CircleExpanded(color: Color, modifier: Modifier = Modifier){
+        Column(
+            modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            LazyColumn(modifier = Modifier.fillMaxWidth().background(color)) {
+                item {
+                    Row(
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.avatar),
+                            contentDescription = null,
+                            modifier = Modifier.size(40.dp),
+                        )
+                        Text(
+                            text = "Family",
+                            fontSize = 20.sp,
+                            modifier = Modifier.padding(10.dp)
+                        )
+                    }
+                }
+            }
+            Divider(modifier.fillMaxWidth())
+            Spacer(modifier.height(10.dp))
+            Row(
+                modifier.background(color).fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
 
-            Icon(
-                painter = painterResource(R.drawable.mail_24px),
-                contentDescription = "Notification",
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.size(32.dp)
-            )
-            Spacer(modifier.width(10.dp))
-            Icon(
-                painter = painterResource(R.drawable.chat_24px),
-                contentDescription = "Chat",
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.size(32.dp)
-            )
+            ){
+                Button(onClick = {} ) {
+                    Text(
+                        text = "Create a circle"
+                    )
+                }
+                Button(onClick = {} ){
+                    Text(
+                        text = "Join a circle"
+                    )
+                }
+            }
         }
     }
 
@@ -201,21 +273,36 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Content(user: User, modifier: Modifier = Modifier) {
-        Card(modifier = modifier.padding(10.dp).fillMaxWidth()) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Image(
-                    painter = painterResource(user.profilePic),
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp),
-                )
-                Column(modifier.padding(start = 5.dp)) {
+        var expand by remember { mutableStateOf(false) }
+        Card(modifier = modifier
+            .padding(10.dp)
+            .fillMaxWidth()
+            .animateContentSize()
+        ) {
+            Column {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(user.profilePic),
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp),
+                    )
                     Text(
                         text = stringResource(user.name),
-                        fontSize = 20.sp
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(10.dp)
                     )
+                    Spacer(modifier.weight(1f))
+                    IconButton(onClick = { expand = !expand }) {
+                        Icon(
+                            imageVector = if (!expand) Icons.Filled.KeyboardArrowDown else Icons.Filled.KeyboardArrowUp,
+                            contentDescription = "Expand"
+                        )
+                    }
+                }
+                if (expand) {
                     Text(
                         text = stringResource(user.lastSeen),
                         fontSize = 12.sp
@@ -227,7 +314,9 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Add_Content(modifier: Modifier = Modifier) {
-        Card(modifier = modifier.padding(10.dp).fillMaxWidth()) {
+        Card(modifier = modifier
+            .padding(10.dp)
+            .fillMaxWidth()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -250,7 +339,9 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Add_Community(modifier: Modifier = Modifier) {
-        Card(modifier = modifier.padding(10.dp).fillMaxWidth()) {
+        Card(modifier = modifier
+            .padding(10.dp)
+            .fillMaxWidth()) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -334,7 +425,6 @@ class MainActivity : ComponentActivity() {
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .padding(top = 30.dp)
                 ) {
                     Map_Top_Bar()
                     Spacer(Modifier.weight(1f))
@@ -346,11 +436,15 @@ class MainActivity : ComponentActivity() {
                     .padding(10.dp)
                     .weight(0.45f)
             ) {
-                Column(modifier = Modifier.fillMaxWidth()) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().animateContentSize()
+                ) {
                     Upper_Panel_Bar(click = click, onClick1 = {click = false}, onClick2 = {click = true})
                     if (!click) {
                         SearchBar(modifier = Modifier.weight(0.15f))
-                        LazyColumn(modifier = Modifier.weight(0.7f)) {
+                        LazyColumn(modifier = Modifier
+                            .weight(0.7f)
+                            .animateContentSize()) {
                             items(users) { user ->
                                 Content(user)
                             }
@@ -380,10 +474,9 @@ class MainActivity : ComponentActivity() {
 
     @Preview(showBackground = true)
     @Composable
-    fun DarkTheme() {
-        AppTheme(darkTheme = true, dynamicColor = false) {
-            Live720_Combined()
-        }
+    fun ExpandView() {
+       CircleExpanded(MaterialTheme.colorScheme.background)
     }
+
 }
 
