@@ -14,4 +14,21 @@
     <string name="user4">Brother</string>
     <string name="seen4">Last seen 3 minutes ago</string>
 
+    <string name="notification">Smart Notification</string>
+    <string name="location">Location Sharing</string>
+    <string name="management">Circle Management</string>
+    <string name="add">Add people to Circle</string>\
+    <string name="share">Share Life720</string>
+    <string name="account">Account</string>
+    <string name="drive">Drive Detection</string>
+    <string name="flight">Flight Detection</string>
+    <string name="privacy">Privacy and Security</string>
+    <string name="support">Chat With Support</string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
+
+    <string name="inbox_title">Inbox</string>
+    <string name="sos_title">SOS</string>
+    <string name="setting_title">Setting</string>
+
 </resources>
