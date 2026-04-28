@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,12 +27,15 @@ import com.example.a210674_nelson_sana_lab1.R
 fun Main_Screen(modifier: Modifier = Modifier) {
     var selectedScreen by remember { mutableStateOf(NavigationBarItems.Map) }
     val navController: NavHostController = rememberNavController()
+    val myViewModel: MyViewModel = viewModel()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     val showBottomBar = NavigationBarItems.entries.any{ it.name == currentRoute}
     val topBarScreen = MainScreenButton.entries.find { it.name == currentRoute }
+
+    val uiState by myViewModel.uiState.collectAsState()
 
     Scaffold(
         modifier = modifier,
@@ -74,15 +79,24 @@ fun Main_Screen(modifier: Modifier = Modifier) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = NavigationBarItems.Map.name,
+            startDestination = login.Login.name,
             modifier = Modifier.padding(innerPadding)
         ) {
+            composable(route = login.Login.name){
+                Login_Screen(
+                    myViewModel = myViewModel,
+                    uiState = uiState,
+                    buttonClick = { navController.navigate(NavigationBarItems.Map.name) }
+                )
+            }
+
             composable(route = NavigationBarItems.Map.name) {
                 Live720_Combined(
                     settingButton = { navController.navigate(MainScreenButton.Setting.name)},
                     inboxButton = { navController.navigate(MainScreenButton.Inbox.name) },
                     sosButton = { navController.navigate(MainScreenButton.Sos.name) },
-                    checkButton = {}
+                    checkButton = {},
+                    uiState = uiState
                 )
             }
 
@@ -105,6 +119,9 @@ fun Main_Screen(modifier: Modifier = Modifier) {
     }
 }
 
+enum class login(){
+    Login
+}
 
 enum class NavigationBarItems(val icon: ImageVector){
     Map(Icons.Filled.LocationOn),

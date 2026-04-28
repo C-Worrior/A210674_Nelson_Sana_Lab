@@ -50,10 +50,16 @@ import androidx.compose.ui.unit.sp
 import com.example.a210674_nelson_sana_lab1.R
 import com.example.a210674_nelson_sana_lab1.User
 import com.example.a210674_nelson_sana_lab1.ui.theme.AppTheme
+import com.example.a210674_nelson_sana_lab1.ui.theme.UiState
 import com.example.a210674_nelson_sana_lab1.users
 
 @Composable
-fun Map_Top_Bar(modifier: Modifier = Modifier, inboxClick: () -> Unit, settingClick: () -> Unit) {
+fun Map_Top_Bar(
+    modifier: Modifier = Modifier,
+    inboxClick: () -> Unit,
+    settingClick: () -> Unit,
+    input: String
+) {
     var groupClicked by remember {mutableStateOf(false)}
     val color by animateColorAsState(
         targetValue = if (groupClicked) MaterialTheme.colorScheme.background else Color.Transparent
@@ -87,7 +93,7 @@ fun Map_Top_Bar(modifier: Modifier = Modifier, inboxClick: () -> Unit, settingCl
                 modifier = Modifier
             ) {
                 Text(
-                    text = "Family"
+                    text = input
                 )
                 Icon(
                     imageVector = if(groupClicked) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
@@ -115,13 +121,17 @@ fun Map_Top_Bar(modifier: Modifier = Modifier, inboxClick: () -> Unit, settingCl
             }
         }
         if (groupClicked) {
-            CircleExpanded(color,modifier)
+            CircleExpanded(color,modifier, input)
         }
     }
 }
 
 @Composable
-fun CircleExpanded(color: Color, modifier: Modifier = Modifier){
+fun CircleExpanded(
+    color: Color,
+    modifier: Modifier = Modifier,
+    input: String
+){
     Column(
         modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -136,7 +146,7 @@ fun CircleExpanded(color: Color, modifier: Modifier = Modifier){
                         modifier = Modifier.size(40.dp),
                     )
                     Text(
-                        text = "Family",
+                        text = input,
                         fontSize = 20.sp,
                         modifier = Modifier.padding(10.dp)
                     )
@@ -398,7 +408,14 @@ fun Lower_Panel_Icon(icon: Painter, name: String, modifier: Modifier = Modifier)
 }
 
 @Composable
-fun Live720_Combined(settingButton: () -> Unit,inboxButton: () -> Unit, sosButton: () -> Unit, checkButton: () -> Unit, modifier: Modifier = Modifier) {
+fun Live720_Combined(
+    settingButton: () -> Unit,
+    inboxButton: () -> Unit,
+    sosButton: () -> Unit,
+    checkButton: () -> Unit,
+    uiState: UiState,
+    modifier: Modifier = Modifier
+) {
     var click by remember {mutableStateOf(false)}
     Column(
         modifier,
@@ -418,7 +435,7 @@ fun Live720_Combined(settingButton: () -> Unit,inboxButton: () -> Unit, sosButto
                 Modifier
                     .fillMaxWidth()
             ) {
-                Map_Top_Bar(settingClick = settingButton, inboxClick = inboxButton)
+                Map_Top_Bar(settingClick = settingButton, inboxClick = inboxButton, input = uiState.userName)
                 Spacer(Modifier.weight(1f))
                 Map_Bottom_Bar(
                     modifier = Modifier.padding(bottom = 10.dp),
@@ -459,17 +476,4 @@ fun Live720_Combined(settingButton: () -> Unit,inboxButton: () -> Unit, sosButto
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun LightTheme() {
-    AppTheme(darkTheme = false, dynamicColor = false) {
-        Live720_Combined({}, {}, {}, {})
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ExpandView() {
-    CircleExpanded(MaterialTheme.colorScheme.background)
-}
 
