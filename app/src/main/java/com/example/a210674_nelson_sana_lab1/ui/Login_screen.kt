@@ -42,7 +42,7 @@ fun Login_Screen(
     buttonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ){
-    var value by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf(  "" ) }
     var showPassword by remember { mutableStateOf( false )}
     var output by remember { mutableStateOf( "" ) }
@@ -71,10 +71,9 @@ fun Login_Screen(
             )
 
         OutlinedTextField(
-            value = value,
+            value = name,
             onValueChange = {
-                value = it
-                myViewModel.setName(value)
+                name = it
             },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
@@ -134,8 +133,10 @@ fun Login_Screen(
 
         Button(
             onClick =
-                if(uiState.authorise)
+                if(uiState.authorise) {
+                    myViewModel.setName(name)
                     buttonClick
+                }
                 else{
                     {
                         output = "Incorrect Username or Password! Please try again."

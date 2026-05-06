@@ -2,6 +2,7 @@ package com.example.a210674_nelson_sana_lab1.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.a210674_nelson_sana_lab1.Circle
+import com.example.a210674_nelson_sana_lab1.Community
 import com.example.a210674_nelson_sana_lab1.User
 import com.example.a210674_nelson_sana_lab1.ui.theme.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,6 +44,14 @@ class MyViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 circleList = currentState.circleList + circle
+            )
+        }
+    }
+
+    fun addCommunity(community: Community){
+        _uiState.update { currentState ->
+            currentState.copy(
+                communityList = currentState.communityList + community
             )
         }
     }

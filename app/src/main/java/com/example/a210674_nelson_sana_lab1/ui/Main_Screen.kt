@@ -102,6 +102,12 @@ fun Main_Screen(modifier: Modifier = Modifier) {
                                 "Family"
                             )
                         )
+                        myViewModel.addCircle(
+                            Circle(
+                                R.drawable.ukm,
+                                "Universiti Kebangsaan Malaysia (UKM)"
+                            )
+                        )
                         navController.navigate(NavigationBarItems.Map.name)
                     }
                 )
