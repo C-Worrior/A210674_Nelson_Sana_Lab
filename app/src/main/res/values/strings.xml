@@ -30,5 +30,7 @@
     <string name="inbox_title">Inbox</string>
     <string name="sos_title">SOS</string>
     <string name="setting_title">Setting</string>
+    <string name="add_circle">Add Circle</string>
+    <string name="add_person">Add Person</string>
 
 </resources>

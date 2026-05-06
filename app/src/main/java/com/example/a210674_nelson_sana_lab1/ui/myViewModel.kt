@@ -1,6 +1,8 @@
 package com.example.a210674_nelson_sana_lab1.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.a210674_nelson_sana_lab1.Circle
+import com.example.a210674_nelson_sana_lab1.User
 import com.example.a210674_nelson_sana_lab1.ui.theme.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +27,22 @@ class MyViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 authorise = userInput == actualPassword
+            )
+        }
+    }
+
+    fun addUser(user: User){
+        _uiState.update { currentState ->
+            currentState.copy(
+                userList = currentState.userList + user
+            )
+        }
+    }
+
+    fun addCircle(circle: Circle){
+        _uiState.update { currentState ->
+            currentState.copy(
+                circleList = currentState.circleList + circle
             )
         }
     }

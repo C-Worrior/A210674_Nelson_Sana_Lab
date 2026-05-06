@@ -20,7 +20,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.a210674_nelson_sana_lab1.Circle
 import com.example.a210674_nelson_sana_lab1.R
+import com.example.a210674_nelson_sana_lab1.User
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,23 +81,38 @@ fun Main_Screen(modifier: Modifier = Modifier) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = login.Login.name,
+            startDestination = Login.Login.name,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(route = login.Login.name){
+            composable(route = Login.Login.name){
                 Login_Screen(
                     myViewModel = myViewModel,
                     uiState = uiState,
-                    buttonClick = { navController.navigate(NavigationBarItems.Map.name) }
+                    buttonClick = {
+                        myViewModel.addUser(
+                            User(
+                                R.drawable.avatar,
+                                uiState.userName,
+                                R.string.seen1
+                            )
+                        )
+                        myViewModel.addCircle(
+                            Circle(
+                                R.drawable.family,
+                                "Family"
+                            )
+                        )
+                        navController.navigate(NavigationBarItems.Map.name)
+                    }
                 )
             }
 
             composable(route = NavigationBarItems.Map.name) {
-                Live720_Combined(
+                Main_Menu(
                     settingButton = { navController.navigate(MainScreenButton.Setting.name)},
-                    inboxButton = { navController.navigate(MainScreenButton.Inbox.name) },
                     sosButton = { navController.navigate(MainScreenButton.Sos.name) },
                     checkButton = {},
+                    addCircle = {},
                     uiState = uiState
                 )
             }
@@ -119,7 +136,7 @@ fun Main_Screen(modifier: Modifier = Modifier) {
     }
 }
 
-enum class login(){
+enum class Login(){
     Login
 }
 
@@ -131,7 +148,9 @@ enum class NavigationBarItems(val icon: ImageVector){
 enum class MainScreenButton(@StringRes val title: Int){
     Inbox(R.string.inbox_title),
     Sos(R.string.sos_title),
-    Setting(R.string.setting_title)
+    Setting(R.string.setting_title),
+    AddCircle(R.string.add_circle),
+    AddPerson(R.string.add_person)
 }
 
 
