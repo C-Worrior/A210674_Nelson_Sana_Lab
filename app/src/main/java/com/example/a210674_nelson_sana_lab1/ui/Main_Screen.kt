@@ -149,7 +149,16 @@ fun Main_Screen(modifier: Modifier = Modifier) {
             //Add Circle Screen
             composable(route = MainScreenButton.AddCircle.name) {
                 AddCircle_Screen(
-                    uiState = uiState
+                    uiState = uiState,
+                    selectionClick = { name ->
+                        myViewModel.addCircle(
+                            Circle(
+                                R.drawable.groups_24px,
+                                name
+                            )
+                        )
+                        navController.navigateUp()
+                    }
                 )
             }
         }
