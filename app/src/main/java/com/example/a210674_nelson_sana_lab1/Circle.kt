@@ -6,3 +6,19 @@ data class Circle(
     @DrawableRes val photo : Int,
     val circleName : String,
 )
+
+data class Suggestion(
+    val name: String
+)
+
+val NameSuggestion = listOf(
+    Suggestion("Family"),
+    Suggestion("Friends"),
+    Suggestion("Extended Family"),
+    Suggestion("Special Someone"),
+    Suggestion("Carpool"),
+    Suggestion("Siblings"),
+    Suggestion("Field trip group"),
+    Suggestion("Vacation group"),
+    Suggestion("Babysitter")
+)

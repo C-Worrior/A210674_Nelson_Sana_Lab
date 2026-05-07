@@ -5,6 +5,7 @@ import com.example.a210674_nelson_sana_lab1.Community
 import com.example.a210674_nelson_sana_lab1.NameSuggestion
 import com.example.a210674_nelson_sana_lab1.User
 import com.example.a210674_nelson_sana_lab1.Suggestion
+import com.example.a210674_nelson_sana_lab1.UserSuggestionList
 
 data class UiState(
     val userName : String = "",
@@ -12,6 +13,7 @@ data class UiState(
     val authorise: Boolean = false,
 
     val userList : List<User> = emptyList(),
+    val userSuggestionList: List<User> = UserSuggestionList,
     val circleList : List<Circle> = emptyList(),
     val communityList : List<Community> = emptyList(),
     val suggestionList : List<Suggestion> = NameSuggestion

@@ -1,214 +1,149 @@
 package com.example.a210674_nelson_sana_lab1.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CarCrash
-import androidx.compose.material.icons.filled.ElectricBolt
-import androidx.compose.material.icons.filled.PhoneAndroid
-import androidx.compose.material.icons.filled.Speed
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.shapes
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 @Composable
-fun Driving_Screen(modifier: Modifier = Modifier){
+fun Driving_Screen(modifier: Modifier = Modifier) {
+    var selectedWeek by remember { mutableStateOf("this") }
+
     Column(
-        modifier = modifier.padding(start = 10.dp, end = 10.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        // Week Selection
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ){
-            Button(
-                shape = shapes.large,
-                onClick = { }
+            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally)
+        ) {
+            FilledTonalButton(
+                onClick = { selectedWeek = "this" },
+                shape = RoundedCornerShape(12.dp),
+                colors = if (selectedWeek == "this") ButtonDefaults.filledTonalButtonColors()
+                else ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                Text(
-                    text = "This Week"
-                )
+                Text("This Week")
             }
-
-            Button(
-                shape = shapes.large,
-                onClick = { }
+            FilledTonalButton(
+                onClick = { selectedWeek = "last" },
+                shape = RoundedCornerShape(12.dp),
+                colors = if (selectedWeek == "last") ButtonDefaults.filledTonalButtonColors()
+                else ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
-                Text(
-                    text = "Last Week"
-                )
+                Text("Last Week")
             }
         }
+
         Text(
             text = "Weekly Driving Report",
+            style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            fontSize = 30.sp
+            color = MaterialTheme.colorScheme.onSurface
         )
-        Row(
-            modifier = Modifier
-        ) {
-            Card(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .weight(1f),
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Speed,
-                        contentDescription = "Over speed"
-                    )
-                    Text(
-                        text = "0"
-                    )
-                }
-            }
 
-            Card(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .weight(1f),
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.PhoneAndroid,
-                        contentDescription = "Distracted"
-                    )
-                    Text(
-                        text = "0"
-                    )
-                }
+        // Metrics Grid (2x2)
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                MetricCard(Icons.Default.Speed, "Speeding", "0", Modifier.weight(1f))
+                MetricCard(Icons.Default.PhoneAndroid, "Distracted", "0", Modifier.weight(1f))
             }
-
-            Card(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .weight(1f),
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.CarCrash,
-                        contentDescription = "Over speed"
-                    )
-                    Text(
-                        text = "0"
-                    )
-                }
-            }
-
-            Card(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .weight(1f),
-                shape = MaterialTheme.shapes.medium
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.ElectricBolt,
-                        contentDescription = "Over speed"
-                    )
-                    Text(
-                        text = "0"
-                    )
-                }
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                MetricCard(Icons.Default.CarCrash, "Hard Brake", "0", Modifier.weight(1f))
+                MetricCard(Icons.Default.ElectricBolt, "Rapid Accel", "0", Modifier.weight(1f))
             }
         }
+
+        // Summary Cards
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Card(
-                modifier = Modifier.weight(1f)
+            ElevatedCard(
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth() // Add this to fill card width
-                        .padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ){
-                    Text(
-                        text = "Top Speed",
-                        textAlign = TextAlign.Center // Add this for text alignment
-                    )
-                    Text(
-                        text = "--",
-                        textAlign = TextAlign.Center
-                    )
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Top Speed", style = MaterialTheme.typography.labelLarge)
+                    Text("--", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+                    Text("km/h", style = MaterialTheme.typography.labelSmall)
                 }
             }
 
-            Card(
-                modifier = Modifier.weight(1f)
+            ElevatedCard(
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(16.dp)
             ) {
-                Row(
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(
-                        modifier = Modifier
+                Column(modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = "Drive"
-                        )
-                        Text(
-                            text = "Total KM"
-                        )
+                        Text("Drives", style = MaterialTheme.typography.labelMedium)
+                        Text("0", fontWeight = FontWeight.Bold)
                     }
-
-                    Column(
-                        modifier = Modifier,
-                        horizontalAlignment = Alignment.End // Align items to the right
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(
-                            text = "0"
-                        )
-                        Text(
-                            text = "0"
-                        )
+                        Text("Total Distance", style = MaterialTheme.typography.labelMedium)
+                        Text("0 km", fontWeight = FontWeight.Bold)
                     }
                 }
             }
         }
-
     }
 }
 
-@Preview
 @Composable
-fun DrivingPreview(){
+fun MetricCard(icon: ImageVector, label: String, value: String, modifier: Modifier = Modifier) {
+    ElevatedCard(
+        modifier = modifier,
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = label,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(24.dp)
+            )
+            Column {
+                Text(text = value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                Text(text = label, style = MaterialTheme.typography.labelSmall)
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DrivingPreview() {
     Driving_Screen()
 }

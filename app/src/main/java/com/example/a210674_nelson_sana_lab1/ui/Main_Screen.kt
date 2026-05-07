@@ -122,6 +122,7 @@ fun Main_Screen(modifier: Modifier = Modifier) {
                     sosButton = { navController.navigate(MainScreenButton.Sos.name) },
                     checkButton = {},
                     addCircle = { navController.navigate(MainScreenButton.AddCircle.name) },
+                    addPerson = { navController.navigate(MainScreenButton.AddPerson.name) },
                     uiState = uiState
                 )
             }
@@ -157,6 +158,17 @@ fun Main_Screen(modifier: Modifier = Modifier) {
                                 name
                             )
                         )
+                        navController.navigateUp()
+                    }
+                )
+            }
+
+            //Add Person Screen
+            composable(route = MainScreenButton.AddPerson.name) {
+                AddPerson_Screen(
+                    uiState = uiState,
+                    buttonClick = {user ->
+                        myViewModel.addUser(user)
                         navController.navigateUp()
                     }
                 )

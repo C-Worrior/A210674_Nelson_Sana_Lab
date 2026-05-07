@@ -2,6 +2,7 @@ package com.example.a210674_nelson_sana_lab1.ui
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -205,6 +206,7 @@ fun Main_Menu(
     sosButton: () -> Unit = {},
     checkButton: () -> Unit = {},
     addCircle: () -> Unit = {},
+    addPerson: () -> Unit = {},
     uiState: UiState = UiState()
 ) {
     var showCommunity by remember { mutableStateOf(false) }
@@ -245,7 +247,7 @@ fun Main_Menu(
                             UserItem(user)
                         }
                         item {
-                            AddActionItem("Add Person", Icons.Default.PersonAdd)
+                            AddActionItem("Add Person", buttonClick = addPerson, icon =  Icons.Default.PersonAdd)
                         }
                     }
                 } else {
@@ -262,14 +264,21 @@ fun Main_Menu(
 }
 
 @Composable
-fun AddActionItem(label: String, icon: ImageVector) {
+fun AddActionItem(
+    label: String,
+    icon: ImageVector,
+    buttonClick: () -> Unit = {}
+) {
     OutlinedCard(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .fillMaxWidth()
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable(onClick = buttonClick)
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(icon, null)

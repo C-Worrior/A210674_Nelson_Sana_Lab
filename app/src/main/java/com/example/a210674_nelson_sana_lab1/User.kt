@@ -9,3 +9,8 @@ data class User(
     @StringRes val lastSeen : Int,
 )
 
+val UserSuggestionList = listOf(
+    User(R.drawable.mom, "Mom", R.string.seen2),
+    User(R.drawable.dad, "Dad", R.string.seen3),
+    User(R.drawable.brother, "Brother", R.string.seen4),
+)
