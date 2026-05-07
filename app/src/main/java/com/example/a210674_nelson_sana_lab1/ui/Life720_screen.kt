@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.a210674_nelson_sana_lab1.Community
 import com.example.a210674_nelson_sana_lab1.R
 import com.example.a210674_nelson_sana_lab1.User
 import com.example.a210674_nelson_sana_lab1.ui.theme.UiState
@@ -91,16 +92,20 @@ fun CircleExpanded(uiState: UiState, buttonClick: () -> Unit) {
                     Image(
                         painter = painterResource(circle.photo),
                         contentDescription = null,
-                        modifier = Modifier.size(32.dp).clip(CircleShape)
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(CircleShape)
                     )
                 }
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            OutlinedButton(onClick = {}, modifier = Modifier.weight(1f)) {
+            OutlinedButton(onClick = buttonClick, modifier = Modifier.weight(1f)) {
                 Text("Create Circle")
             }
             Button(onClick = {}, modifier = Modifier.weight(1f)) {
@@ -113,7 +118,9 @@ fun CircleExpanded(uiState: UiState, buttonClick: () -> Unit) {
 @Composable
 fun Map_Bottom_Bar(sosClick: () -> Unit, checkClick: () -> Unit) {
     Surface(
-        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
         color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
         tonalElevation = 4.dp
@@ -143,7 +150,9 @@ fun Map_Bottom_Bar(sosClick: () -> Unit, checkClick: () -> Unit) {
 @Composable
 fun UserItem(user: User) {
     Card(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .fillMaxWidth(),
     ) {
         Column(modifier = Modifier.animateContentSize()) {
             ListItem(
@@ -153,7 +162,34 @@ fun UserItem(user: User) {
                     Image(
                         painter = painterResource(user.profilePic),
                         contentDescription = null,
-                        modifier = Modifier.size(48.dp).clip(CircleShape),
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun CommunityItem(community: Community) {
+    Card(
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .fillMaxWidth(),
+    ) {
+        Column(modifier = Modifier.animateContentSize()) {
+            ListItem(
+                headlineContent = { Text(community.name, fontWeight = FontWeight.SemiBold) },
+                leadingContent = {
+                    Image(
+                        painter = painterResource(community.image),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -214,6 +250,9 @@ fun Main_Menu(
                     }
                 } else {
                     LazyColumn(modifier = Modifier.padding(16.dp)) {
+                        items(uiState.communityList){ community ->
+                            CommunityItem(community)
+                        }
                         item { AddActionItem("Add Community", Icons.Default.Groups) }
                     }
                 }
@@ -225,7 +264,9 @@ fun Main_Menu(
 @Composable
 fun AddActionItem(label: String, icon: ImageVector) {
     OutlinedCard(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp).fillMaxWidth()
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
     ) {
         Row(
             modifier = Modifier.padding(16.dp),

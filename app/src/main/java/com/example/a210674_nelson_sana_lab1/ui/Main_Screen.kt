@@ -21,6 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.a210674_nelson_sana_lab1.Circle
+import com.example.a210674_nelson_sana_lab1.Community
 import com.example.a210674_nelson_sana_lab1.R
 import com.example.a210674_nelson_sana_lab1.User
 
@@ -84,6 +85,7 @@ fun Main_Screen(modifier: Modifier = Modifier) {
             startDestination = Login.Login.name,
             modifier = Modifier.padding(innerPadding)
         ) {
+           //Login Screen
             composable(route = Login.Login.name){
                 Login_Screen(
                     myViewModel = myViewModel,
@@ -102,10 +104,10 @@ fun Main_Screen(modifier: Modifier = Modifier) {
                                 "Family"
                             )
                         )
-                        myViewModel.addCircle(
-                            Circle(
-                                R.drawable.ukm,
-                                "Universiti Kebangsaan Malaysia (UKM)"
+                        myViewModel.addCommunity(
+                            Community(
+                                image = R.drawable.ukm,
+                                name = "Universiti Kebangsaan Malaysia (UKM)"
                             )
                         )
                         navController.navigate(NavigationBarItems.Map.name)
@@ -113,30 +115,42 @@ fun Main_Screen(modifier: Modifier = Modifier) {
                 )
             }
 
+            //Main Menu
             composable(route = NavigationBarItems.Map.name) {
                 Main_Menu(
                     settingButton = { navController.navigate(MainScreenButton.Setting.name)},
                     sosButton = { navController.navigate(MainScreenButton.Sos.name) },
                     checkButton = {},
-                    addCircle = {},
+                    addCircle = { navController.navigate(MainScreenButton.AddCircle.name) },
                     uiState = uiState
                 )
             }
 
+            //Driving Screen
             composable(route = NavigationBarItems.Driving.name) {
-                Driving_screen()
+                Driving_Screen()
             }
 
+            //Inbox Screen
             composable(route = MainScreenButton.Inbox.name) {
-                Inbox_screen()
+                Inbox_Screen()
             }
 
+            //Sos Screen
             composable(route = MainScreenButton.Sos.name) {
                 SOS_Screen()
             }
 
+            //Setting Screen
             composable(route = MainScreenButton.Setting.name){
-                Setting_screen()
+                Setting_Screen()
+            }
+
+            //Add Circle Screen
+            composable(route = MainScreenButton.AddCircle.name) {
+                AddCircle_Screen(
+                    uiState = uiState
+                )
             }
         }
     }

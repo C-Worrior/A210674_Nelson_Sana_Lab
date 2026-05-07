@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Driving_screen(modifier: Modifier = Modifier){
+fun Driving_Screen(modifier: Modifier = Modifier){
     Column(
         modifier = modifier.padding(start = 10.dp, end = 10.dp),
         verticalArrangement = Arrangement.Center,
@@ -210,5 +210,5 @@ fun Driving_screen(modifier: Modifier = Modifier){
 @Preview
 @Composable
 fun DrivingPreview(){
-    Driving_screen()
+    Driving_Screen()
 }

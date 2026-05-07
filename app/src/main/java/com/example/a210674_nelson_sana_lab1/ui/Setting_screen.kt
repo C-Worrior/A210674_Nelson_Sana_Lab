@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.a210674_nelson_sana_lab1.settings
 
 @Composable
-fun Setting_screen(modifier: Modifier = Modifier){
+fun Setting_Screen(modifier: Modifier = Modifier){
     LazyColumn(
         modifier.fillMaxSize()
     ) {
@@ -63,5 +63,5 @@ fun Setting_screen(modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun SettingPreview(){
-    Setting_screen()
+    Setting_Screen()
 }
