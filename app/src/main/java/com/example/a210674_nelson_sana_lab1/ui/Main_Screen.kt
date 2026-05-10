@@ -132,11 +132,6 @@ fun Main_Screen(modifier: Modifier = Modifier) {
                 Driving_Screen()
             }
 
-            //Inbox Screen
-            composable(route = MainScreenButton.Inbox.name) {
-                Inbox_Screen()
-            }
-
             //Sos Screen
             composable(route = MainScreenButton.Sos.name) {
                 SOS_Screen()
